@@ -220,7 +220,7 @@ AGENTS.md (root)
 │   ├── keys/                 — Keys tools (send_keys)
 │   ├── layout/               — Layout tools (export)
 │   └── events/               — Event subscriptions
-├── docs/AGENTS.md            — PRD, issue tracker config, socket API research
+├── docs/AGENTS.md            — PRD, issue tracker config, research
 └── shared/AGENTS.md          — cross-slice type contracts
 ```
 
