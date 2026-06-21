@@ -201,6 +201,8 @@ When the user requests a durable behavior change, record it here or in the relev
 
 | Child | Path | Scope |
 |-------|------|-------|
+| **skill/SKILL.md** | `skill/` | pi-herdr skill documentation for herdr integration |
+| **prompts/** | `prompts/` | Prompt templates for herdr workflows |
 | **slices/AGENTS.md** | `slices/` | Vertical slice architecture — socket, pane, workspace, keys, layout, events |
 | **docs/AGENTS.md** | `docs/` | Project documentation — PRD, issue tracker config |
 | **shared/AGENTS.md** | `shared/` | Cross-slice TypeScript type contracts |
@@ -209,6 +211,8 @@ When the user requests a durable behavior change, record it here or in the relev
 
 ```
 AGENTS.md (root)
+├── skill/SKILL.md            — pi-herdr skill documentation
+├── prompts/                  — prompt templates for herdr workflows
 ├── slices/AGENTS.md          — 6 vertical slices: socket, pane, workspace, keys, layout, events
 ├── docs/AGENTS.md            — PRD, issue tracker config
 └── shared/AGENTS.md          — cross-slice type contracts
