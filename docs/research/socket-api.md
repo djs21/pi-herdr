@@ -151,6 +151,29 @@ Managed processes receive:
 | `agent.focus` | `{ id }` |
 | `agent.start` | `{ id?, cwd?, command? }` |
 
+### Integrations
+
+| Method | Params |
+|--------|--------|
+| `integration.install` | `{ type, config? }` |
+| `integration.uninstall` | `{ id }` |
+
+### Plugins
+
+| Method | Params |
+|--------|--------|
+| `plugin.link` | `{ path }` |
+| `plugin.list` | `{}` |
+| `plugin.unlink` | `{ id }` |
+| `plugin.enable` | `{ id }` |
+| `plugin.disable` | `{ id }` |
+| `plugin.action.list` | `{ plugin_id }` |
+| `plugin.action.invoke` | `{ plugin_id, action_id, params? }` |
+| `plugin.log.list` | `{ plugin_id }` |
+| `plugin.pane.open` | `{ plugin_id, pane_id? }` |
+| `plugin.pane.focus` | `{ plugin_id, pane_id? }` |
+| `plugin.pane.close` | `{ plugin_id, pane_id? }` |
+
 ### Events
 
 | Method | Params |

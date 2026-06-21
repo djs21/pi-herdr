@@ -204,7 +204,7 @@ When the user requests a durable behavior change, record it here or in the relev
 | **skill/SKILL.md** | `skill/` | pi-herdr skill — agent instructions for using herdr tools |
 | **prompts/AGENTS.md** | `prompts/` | Workflow templates — run-and-observe, debug-terminal, setup-workspace, export-layout |
 | **slices/AGENTS.md** | `slices/` | 6 vertical slices: socket, pane, workspace, keys, layout, events |
-| **docs/AGENTS.md** | `docs/` | Project documentation — PRD, issue tracker config, socket API research |
+| **docs/AGENTS.md** | `docs/` | Project documentation — PRD, issue tracker config, research |
 | **shared/AGENTS.md** | `shared/` | Cross-slice TypeScript type contracts |
 
 ### DOX Tree
