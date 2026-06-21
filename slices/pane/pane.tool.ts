@@ -133,12 +133,20 @@ export function registerPaneTools(pi: ExtensionAPI): void {
     description: "Split a pane horizontally or vertically. If no pane_id is specified, splits the current pane.",
     parameters: Type.Object({
       pane_id: Type.Optional(Type.String({ description: "Pane ID to split (default: current pane)" })),
-      direction: Type.String({ description: "Split direction: 'horizontal' or 'vertical'" }),
+      direction: Type.String({ description: "Split direction: 'horizontal' (top-bottom) or 'vertical' (left-right). Also accepts herdr native 'down' (horizontal) or 'right' (vertical)." }),
       size: Type.Optional(Type.Number({ description: "Size of the new pane in percentage or rows/cols" })),
     }),
     async execute(_toolCallId, params, _signal, _onUpdate, _ctx) {
       try {
-        const requestParams: Record<string, unknown> = { direction: params.direction };
+        // Map direction: horizontal→down, vertical→right (herdr API convention)
+        const directionMap: Record<string, string> = {
+          horizontal: "down",
+          vertical: "right",
+          down: "down",
+          right: "right",
+        };
+        const herdrDirection = directionMap[params.direction] || params.direction;
+        const requestParams: Record<string, unknown> = { direction: herdrDirection };
         if (params.pane_id) requestParams.id = params.pane_id;
         if (params.size !== undefined) requestParams.size = params.size;
         const result = await getSocketManager().sendRequest("pane.split", requestParams);
