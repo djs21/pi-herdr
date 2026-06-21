@@ -213,32 +213,32 @@ export class HerdrSocketManager implements SocketManager {
   }
 
   /**
- * Start keep-alive ping interval to prevent connection timeout.
- * Sends server.ping every 10 seconds.
- */
-private startPing(): void {
-  this.stopPing();
-  this._pingTimer = setInterval(async () => {
-    try {
-      if (this._state === SocketState.Connected && this._socket) {
-        const id = `ping_${Date.now()}`;
-        this._socket.write(JSON.stringify({ id, method: "server.ping", params: {} }) + "\n");
+   * Start keep-alive ping interval to prevent connection timeout.
+   * Sends server.ping every 10 seconds.
+   */
+  private startPing(): void {
+    this.stopPing();
+    this._pingTimer = setInterval(async () => {
+      try {
+        if (this._state === SocketState.Connected && this._socket) {
+          const id = `ping_${Date.now()}`;
+          this._socket.write(JSON.stringify({ id, method: "server.ping", params: {} }) + "\n");
+        }
+      } catch {
+        // Ignore ping errors — close handler will update state
       }
-    } catch {
-      // Ignore ping errors — close handler will update state
-    }
-  }, this._pingIntervalMs);
-}
-
-/**
- * Stop keep-alive ping interval.
- */
-private stopPing(): void {
-  if (this._pingTimer) {
-    clearInterval(this._pingTimer);
-    this._pingTimer = null;
+    }, this._pingIntervalMs);
   }
-}
+
+  /**
+   * Stop keep-alive ping interval.
+   */
+  private stopPing(): void {
+    if (this._pingTimer) {
+      clearInterval(this._pingTimer);
+      this._pingTimer = null;
+    }
+  }
 
   private rejectAllPending(reason: string): void {
     for (const [id, pending] of this._pendingRequests) {
