@@ -2,16 +2,32 @@ import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { getSocketManager, hasSocketManager } from "../socket/socket.accessor.js";
 
 let subscribed = false;
+let _eventRequestId: string | null = null;
 
-export async function subscribeToEvents(ctx: any): Promise<void> {
+/**
+ * Subscribe to herdr events. This keeps the connection open (persistent).
+ * Herdr docs: "Event subscriptions keep the connection open after the initial response."
+ * 
+ * Called on session_start after connection.
+ */
+export async function subscribeToEvents(): Promise<void> {
   if (!hasSocketManager() || subscribed) return;
   try {
-    await getSocketManager().sendRequest("events.subscribe", {
-      events: ["pane.focused", "workspace.focused", "pane.exited"],
+    const result = await getSocketManager().sendRequest("events.subscribe", {
+      subscriptions: [
+        { type: "pane.focused" },
+        { type: "workspace.focused" },
+        { type: "pane.exited" },
+        { type: "pane.agent_status_changed" },
+      ],
     });
     subscribed = true;
+    // Store the subscription request ID for cleanup
+    if (result && typeof result === "object" && "id" in result) {
+      _eventRequestId = (result as any).id;
+    }
   } catch {
-    // Silently fail — events are optional
+    // Silently fail — events subscription is optional
   }
 }
 
@@ -21,4 +37,5 @@ export function isSubscribed(): boolean {
 
 export function resetSubscription(): void {
   subscribed = false;
+  _eventRequestId = null;
 }

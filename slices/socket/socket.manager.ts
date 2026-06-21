@@ -18,6 +18,8 @@ export class HerdrSocketManager implements SocketManager {
   private _pendingRequests = new Map<string, PendingRequest>();
   private _requestCounter = 0;
   private _buffer = "";
+  private _pingTimer: ReturnType<typeof setInterval> | null = null;
+  private readonly _pingIntervalMs = 10_000; // Ping every 10 seconds
 
   get state(): SocketState {
     return this._state;
@@ -81,6 +83,7 @@ export class HerdrSocketManager implements SocketManager {
         sock.on("connect", () => {
           this._state = SocketState.Connected;
           this._config = resolvedConfig;
+          this.startPing();
           resolve({
             success: true,
             state: this._state,
@@ -94,6 +97,7 @@ export class HerdrSocketManager implements SocketManager {
         });
 
         sock.on("close", () => {
+          this.stopPing();
           this._state = SocketState.Disconnected;
           this._socket = null;
           // Don't reject pending — they were already resolved before close
@@ -136,6 +140,7 @@ export class HerdrSocketManager implements SocketManager {
   }
 
   disconnect(): void {
+    this.stopPing();
     this._socket?.destroy();
     this._socket = null;
     this._state = SocketState.Disconnected;
@@ -206,6 +211,34 @@ export class HerdrSocketManager implements SocketManager {
       }
     }
   }
+
+  /**
+ * Start keep-alive ping interval to prevent connection timeout.
+ * Sends server.ping every 10 seconds.
+ */
+private startPing(): void {
+  this.stopPing();
+  this._pingTimer = setInterval(async () => {
+    try {
+      if (this._state === SocketState.Connected && this._socket) {
+        const id = `ping_${Date.now()}`;
+        this._socket.write(JSON.stringify({ id, method: "server.ping", params: {} }) + "\n");
+      }
+    } catch {
+      // Ignore ping errors — close handler will update state
+    }
+  }, this._pingIntervalMs);
+}
+
+/**
+ * Stop keep-alive ping interval.
+ */
+private stopPing(): void {
+  if (this._pingTimer) {
+    clearInterval(this._pingTimer);
+    this._pingTimer = null;
+  }
+}
 
   private rejectAllPending(reason: string): void {
     for (const [id, pending] of this._pendingRequests) {
