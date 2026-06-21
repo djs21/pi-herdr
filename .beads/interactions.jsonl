@@ -62,3 +62,4 @@
 {"id":"int-9e354b46","kind":"field_change","created_at":"2026-06-21T16:26:49.333076496Z","actor":"djs21","issue_id":"pi-herdr-755","extra":{"field":"status","new_value":"closed","old_value":"open","reason":"Closed"}}
 {"id":"int-1a53fd8e","kind":"field_change","created_at":"2026-06-21T16:26:49.557537796Z","actor":"djs21","issue_id":"pi-herdr-cb7","extra":{"field":"status","new_value":"closed","old_value":"open","reason":"Closed"}}
 {"id":"int-1d6addd2","kind":"field_change","created_at":"2026-06-21T16:26:49.769077235Z","actor":"djs21","issue_id":"pi-herdr-sl9","extra":{"field":"status","new_value":"closed","old_value":"open","reason":"Closed"}}
+{"id":"int-742ffb01","kind":"field_change","created_at":"2026-06-21T16:37:26.648250917Z","actor":"djs21","issue_id":"pi-herdr-pb0","extra":{"field":"status","new_value":"closed","old_value":"in_progress","reason":"Closed"}}
