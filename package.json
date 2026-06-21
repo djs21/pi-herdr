@@ -1,0 +1,19 @@
+{
+  "name": "pi-herdr",
+  "version": "0.1.0",
+  "description": "Herdr Socket API extension for pi coding agent — control herdr terminal workspace manager from pi",
+  "keywords": ["pi-package", "pi-extension", "herdr", "terminal"],
+  "license": "MIT",
+  "type": "module",
+  "pi": {
+    "extensions": ["./index.ts"],
+    "skills": ["./skill"],
+    "prompts": ["./prompts"]
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
+    "@earendil-works/pi-ai": "*",
+    "@earendil-works/pi-tui": "*",
+    "typebox": "*"
+  }
+}
