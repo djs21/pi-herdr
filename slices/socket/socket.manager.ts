@@ -95,8 +95,10 @@ export class HerdrSocketManager implements SocketManager {
 
         sock.on("close", () => {
           this._state = SocketState.Disconnected;
-          this.rejectAllPending("Connection closed");
           this._socket = null;
+          // Don't reject pending — they were already resolved before close
+          this._pendingRequests.clear();
+          this._buffer = "";
         });
 
         sock.on("error", (err: Error) => {
@@ -142,6 +144,22 @@ export class HerdrSocketManager implements SocketManager {
   }
 
   async sendRequest(method: string, params?: Record<string, unknown>): Promise<unknown> {
+    // Auto-reconnect if disconnected
+    if (this._state === SocketState.Disconnected || !this._socket) {
+      if (this._config) {
+        const result = await this.connect(this._config);
+        if (!result.success) {
+          throw new Error(result.error || "Failed to reconnect to herdr");
+        }
+      } else {
+        // Try default path
+        const result = await this.connect();
+        if (!result.success) {
+          throw new Error(result.error || "Failed to connect to herdr");
+        }
+      }
+    }
+
     if (this._state !== SocketState.Connected || !this._socket) {
       throw new Error("Not connected to herdr. Call herdr_connect first.");
     }
