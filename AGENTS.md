@@ -214,8 +214,14 @@ AGENTS.md (root)
 ├── skill/SKILL.md            — pi-herdr skill documentation
 ├── prompts/                  — prompt templates for herdr workflows
 ├── slices/AGENTS.md          — 6 vertical slices: socket, pane, workspace, keys, layout, events
+│   ├── socket/               — SocketManager implementation
+│   ├── pane/                 — Pane tools (current, list, send_text, read, wait, split)
+│   ├── workspace/            — Workspace tools (list, focus)
+│   ├── keys/                 — Keys tools (send_keys)
+│   ├── layout/               — Layout tools (export)
+│   └── events/               — Event subscriptions
 ├── docs/AGENTS.md            — PRD, issue tracker config
-└── shared/AGENTS.md          — cross-slice type contracts
+└── shared/AGENTS.md           — cross-slice type contracts
 ```
 
 ### Scope Rules
