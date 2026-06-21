@@ -10,6 +10,7 @@ import { HerdrSocketManager } from "./slices/socket/socket.manager.js";
 import { setSocketManager, hasSocketManager, getSocketManager } from "./slices/socket/socket.accessor.js";
 import { registerSocketTools } from "./slices/socket/socket.tool.js";
 import { registerPaneTools } from "./slices/pane/pane.tool.js";
+import { registerPaneRenameTool } from "./slices/pane/pane.rename.tool.js";
 import { registerWorkspaceTools } from "./slices/workspace/workspace.tool.js";
 import { registerKeysTools } from "./slices/keys/keys.tool.js";
 import { registerLayoutTools } from "./slices/layout/layout.tool.js";
@@ -47,6 +48,7 @@ export default function (pi: ExtensionAPI) {
   // ─── Register Tools ───────────────────────────────────
   registerSocketTools(pi);
   registerPaneTools(pi);
+  registerPaneRenameTool(pi);
   registerWorkspaceTools(pi);
   registerKeysTools(pi);
   registerLayoutTools(pi);
